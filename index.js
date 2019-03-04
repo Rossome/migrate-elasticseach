@@ -6,6 +6,7 @@ const program = require('commander');
 let source;
 let destination;
 let regex;
+let script;
 
 program
   .version(pkginfo.version)
@@ -13,6 +14,7 @@ program
   .option('-O, --overwrite', 'erase all documents in an index before copying')
   .option('-R, --remove', 'remove indexes not on source')
   .option('-y, --yes', 'confirm')
+  .option('-s, --script [script]', 'optional painless script to run') 
   .arguments('<source> <destination> [regex of indexes to copy]')
   .usage('[options] <source> <destination> [regex of indexes to copy]')
   .action((cmdSource, cmdDestination, cmdRegex) => {
@@ -53,6 +55,10 @@ if(program.yes) {
   elasticsearch.flags.yes = true;
 }
 
+if(program.script) {
+  script = program.script;
+}
+
 if(!source.startsWith('http')) {
   source = `http://${source}`;
 }
@@ -61,4 +67,4 @@ if(!destination.startsWith('http')) {
   destination = `http://${destination}`;
 }
 
-elasticsearch.migrate(source, destination, regex);
+elasticsearch.migrate(source, destination, regex, script);
