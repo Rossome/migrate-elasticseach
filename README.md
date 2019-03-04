@@ -29,4 +29,4 @@ Migrate any indexes that do not already exist (and have a least 1 document)
 
 Migrate a context suggester with a script
 
-`migrate-elasticsearch -ROy clusterA clusterB context_index  "ctx._source.payload = ctx._source.suggest.payload; ctx._source.output = ctx._source.suggest.remove(\"output\"); ctx._source.payload = ctx._source.suggest.remove(\"payload\"); ctx._source.suggest.contexts = ctx._source.suggest.remove(\"context\");"`
+`migrate-elasticsearch -ROy clusterA clusterB context_index  -s "ctx._source.payload = ctx._source.suggest.payload; ctx._source.output = ctx._source.suggest.remove(\"output\"); ctx._source.payload = ctx._source.suggest.remove(\"payload\"); ctx._source.suggest.contexts = ctx._source.suggest.remove(\"context\");"`
